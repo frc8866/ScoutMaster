@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="downloadMasterSheet" onclick="downloadMasterSheet()">Download Master Sheet</button>
+    <h2>Master App</h2>
+    <div id="uploadSection">
+        <label for="fileInput">Upload MasterSheet.csv:</label>
+        <input type="file" id="fileInput" accept=".csv">
+    </div>
+    <div id="inputSection" class="container hidden">
+        <p>Enter the scanned data string below:</p>
+        <input type="text" id="dataInput" placeholder="Paste data string here">
+        <button onclick="interpretData()">Interpret</button>
+        <button id="startScannerButton">Start QR Scanner</button>
+        <button onclick="restart()" id="restartButton">Restart</button>
+    </div>
+
+    <div id="qr-reader" class="hidden"></div>
+    <div id="output"></div>
+    <script src="html5-qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

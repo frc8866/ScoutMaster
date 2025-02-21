@@ -1,0 +1,61 @@
+body {
+    font-family: 'Avenir', sans-serif;
+    background-color: black;
+    color: gold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    margin: 0;
+}
+
+input, button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+    text-align: center;
+    background-color: black;
+    color: gold;
+    border: 1px solid gold;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d4af37;
+}
+
+#output {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.section {
+    flex: 1;
+    margin: 10px;
+    min-width: 250px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.section p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#qr-reader {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
