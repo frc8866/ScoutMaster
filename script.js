@@ -87,8 +87,8 @@ function exportToCSV() {
 
     const endGamePoints = [
         { value: values[13] == 2 ? 2 : 0, points: 1 },
-        { value: values[14] == 12 ? 12 : 0, points: 1 },
-        { value: values[15] == 6 ? 6 : 0, points: 1 }
+        { value: values[14] == 12 ? 12 : (values[14] == 88 ? 0 : 0), points: 1 },
+        { value: values[15] == 6 ? 6 : (values[15] == 66 ? 0 : 0), points: 1 }
     ];
 
     autonomousPoints.forEach(item => totalScore += parseInt(item.value));
@@ -119,7 +119,7 @@ function exportToCSV() {
     const autonomousPercentage = calculateAutonomousPercentage(values, missedAutoPieces);
     const teleopPercentage = calculateTeleopPercentage(values, missedTeleopPieces);
     
-    csvContent += `\nMatch ${matchNumber},${scouterName},${matchType},${teamNumber},${allianceColor},,${values[6] == 3 ? "Yes" : "No"},${values[0] / 3},${values[1] / 4},${values[2] / 6},${values[3] / 7},${values[4] / 6},${values[5] / 4},${autonomousPercentage.toFixed(2)}%,,${values[7] / 2},${values[8] / 3},${values[9] / 4},${values[10] / 5},${values[4] / 6},${values[5] / 4},${teleopPercentage.toFixed(2)}%,,${values[13] == 2 ? "Yes" : "No"},${values[14] == 12 ? "Yes" : "No"},${values[15] == 6 ? "Yes" : "No"},${totalScore},${allianceScore},${scoreContribution.toFixed(2)}%,${rolePlayed},${averageCycleTime.toFixed(2)},${consistentGamePiece},${driverAbility},${robotAbility},${deadRobot},${brokenRobot},${comments}`;
+    csvContent += `\nMatch ${matchNumber},${scouterName},${matchType},${teamNumber},${allianceColor},,${values[6] == 3 ? "Yes" : "No"},${values[0] / 3},${values[1] / 4},${values[2] / 6},${values[3] / 7},${values[4] / 6},${values[5] / 4},${autonomousPercentage.toFixed(2)}%,,${values[7] / 2},${values[8] / 3},${values[9] / 4},${values[10] / 5},${values[4] / 6},${values[5] / 4},${teleopPercentage.toFixed(2)}%,,${values[13] == 2 ? "Yes" : "No"},${values[14] == 12 ? "Yes" : (values[14] == 88 ? "FAILED" : "No")},${values[15] == 6 ? "Yes" : (values[15] == 66 ? "FAILED" : "No")},${totalScore},${allianceScore},${scoreContribution.toFixed(2)}%,${rolePlayed},${averageCycleTime.toFixed(2)},${consistentGamePiece},${driverAbility},${robotAbility},${deadRobot},${brokenRobot},${comments}`;
 
     const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
     const link = document.createElement("a");
@@ -218,8 +218,8 @@ function interpretData() {
 
     const endGamePoints = [
         { value: values[13] == 2 ? 2 : 0, points: 1 },
-        { value: values[14] == 12 ? 12 : 0, points: 1 },
-        { value: values[15] == 6 ? 6 : 0, points: 1 }
+        { value: values[14] == 12 ? 12 : (values[14] == 88 ? 0 : 0), points: 1 },
+        { value: values[15] == 6 ? 6 : (values[15] == 66 ? 0 : 0), points: 1 }
     ];
 
     autonomousPoints.forEach(item => totalScore += parseInt(item.value));
@@ -277,8 +277,8 @@ function interpretData() {
     <div class="section">
         <p><strong>End Game:</strong></p>
         <p>Parked: ${values[13] == 2 ? "Yes" : "No"}</p>
-        <p>Deep: ${values[14] == 12 ? "Yes" : "No"}</p>
-        <p>Shallow: ${values[15] == 6 ? "Yes" : "No"}</p>
+        <p>Deep: ${values[14] == 12 ? "Yes" : (values[14] == 88 ? "FAILED" : "No")}</p>
+        <p>Shallow: ${values[15] == 6 ? "Yes" : (values[15] == 66 ? "FAILED" : "No")}</p>
         <p><strong>Total Score:</strong> ${totalScore} points</p>
         <p><strong>Alliance Score:</strong> ${allianceScore} points</p>
         <p><strong>Score Contribution:</strong> ${scoreContribution.toFixed(2)}%</p>
