@@ -21,7 +21,33 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function restart() {
-        window.location.reload(); 
+    // Reset global variables
+    totalScore = 0;
+    importedCSVContent = "";
+
+    // Reset UI elements
+    document.getElementById("dataInput").value = "";
+    document.getElementById("output").innerHTML = "";
+    
+    // Reset file input
+    document.getElementById("fileInput").value = "";
+    
+    // Reset visibility of sections
+    document.getElementById("inputSection").classList.add("hidden");
+    document.getElementById("uploadSection").classList.remove("hidden");
+    
+    // Reset QR scanner if it exists
+    const qrReader = document.getElementById("qr-reader");
+    if (qrReader) {
+        qrReader.innerHTML = "";
+        qrReader.classList.add("hidden");
+    }
+    
+    // Reset scanner button
+    const startScannerButton = document.getElementById("startScannerButton");
+    if (startScannerButton) {
+        startScannerButton.style.display = "block";
+    }
 }
 
 function exportToCSV() {
