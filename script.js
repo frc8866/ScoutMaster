@@ -108,15 +108,16 @@ function exportToCSV() {
     const rolePlayed = values[27];
     const comments = values[28];
     const allianceScore = values[29];
-    const deadRobot = values[30];
+    const deadRobot = values[30] == "1" ? "Yes" : "No";
     const brokenRobot = values[31] == "1" ? "Yes" : "No";
-    const missedAutoPieces = values[32];
-    const missedTeleopPieces = values[33];
-    const cycleTimes = values[34];
+    const missedAutoPieces = values[34];
+    const missedTeleopPieces = values[35];
+    const cycleTimes = values[36];
+    const penaltyPoints = values[37];
     
     const averageCycleTime = calculateAverageCycleTime(cycleTimes);
-    const scoreContribution = calculateScoreContribution(allianceScore, totalScore);
     const autonomousPercentage = calculateAutonomousPercentage(values, missedAutoPieces);
+    const scoreContribution = calculateScoreContribution(allianceScore, totalScore, penaltyPoints);
     const teleopPercentage = calculateTeleopPercentage(values, missedTeleopPieces);
     
     csvContent += `\nMatch ${matchNumber},${scouterName},${matchType},${teamNumber},${allianceColor},,${values[6] == 3 ? "Yes" : "No"},${values[0] / 3},${values[1] / 4},${values[2] / 6},${values[3] / 7},${values[4] / 6},${values[5] / 4},${autonomousPercentage.toFixed(2)}%,,${values[7] / 2},${values[8] / 3},${values[9] / 4},${values[10] / 5},${values[4] / 6},${values[5] / 4},${teleopPercentage.toFixed(2)}%,,${values[13] == 2 ? "Yes" : "No"},${values[14] == 12 ? "Yes" : (values[14] == 88 ? "FAILED" : "No")},${values[15] == 6 ? "Yes" : (values[15] == 66 ? "FAILED" : "No")},${totalScore},${allianceScore},${scoreContribution.toFixed(2)}%,${rolePlayed},${averageCycleTime.toFixed(2)},${consistentGamePiece},${driverAbility},${robotAbility},${deadRobot},${brokenRobot},${comments}`;
@@ -170,14 +171,19 @@ function calculateTeleopPercentage(values, missedTeleopPieces) {
     return (totalMadePieces / totalPieces) * 100;
 }
 
-function calculateScoreContribution(allianceScore, totalScore) {
+function calculateScoreContribution(allianceScore, totalScore, penaltyPoints) {
     if (totalScore === 0) {
         return 0;
     }
-    return (totalScore / allianceScore) * 100;
+    // Fix: Adjust alliance score by subtracting penalties first
+    const adjustedAllianceScore = allianceScore - penaltyPoints;
+    return (totalScore / adjustedAllianceScore) * 100;
 }
 
 function calculateAverageCycleTime(cycleTimes) {
+    if (cycleTimes == '') {
+        return 0;
+    }
     const times = cycleTimes.split("+").map(time => parseFloat(time));
     const total = times.reduce((acc, time) => acc + time, 0);
     return total / times.length;
@@ -244,9 +250,10 @@ function interpretData() {
     const missedAutoPieces = values[34];
     const missedTeleopPieces = values[35];
     const cycleTimes = values[36];
+    const penaltyPoints = values[37];
 
     const averageCycleTime = calculateAverageCycleTime(cycleTimes);
-    const scoreContribution = calculateScoreContribution(allianceScore, totalScore);
+    const scoreContribution = calculateScoreContribution(allianceScore, totalScore, penaltyPoints);
     const autonomousPercentage = calculateAutonomousPercentage(values, missedAutoPieces);
     const teleopPercentage = calculateTeleopPercentage(values, missedTeleopPieces);
 
